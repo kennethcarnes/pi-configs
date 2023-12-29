@@ -1,63 +1,56 @@
-### Script to Set Up CI/CD Configuration and GitHub Actions Workflow for Home Assistant, Docker, and Pi-hole on Raspberry Pi
-
-# Set up directory structure
+# 1. Set up directory structure
+```bash
 mkdir -p ~/pi-configs/{home-assistant,docker,pi-hole}
-
-# Navigate to your project directory
 cd C:\code\pi-configs
-
-# Create the .github/workflows directory
 mkdir .github\workflows -Force
+```
 
-# Write the YAML content to a .gitub\workflows\ci-cd.yml file
+# 2. Write the YAML content to a .gitub\workflows\ci-cd.yml file
 
-# Proceed wit repository creation
+# 3. Proceed with repository creation
+```bash
+git add .
 git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/kennethcarnes/pi-configs.git
 git push -u origin main
+```
 
-### Enable SSH for Remote Access:
-# Enable SSH on Raspberry Pi
+# 6. Connect to Raspberry Pi via SSH & update
+```bash
 sudo raspi-config
 # Follow: "Interfacing Options" -> "SSH" -> Enable
-
-# Find Raspberry Pi's IP address
 hostname -I
-
-### Connect from Windows PC using SSH:
-# SSH from Windows PowerShell
-ssh pi@<raspberry-pi-ip> # Replace <raspberry-pi-ip> with Pi's IP
-
-### Prepare Raspberry Pi for Docker and Home Assistant:
-# Update and upgrade Raspberry Pi OS
+ssh pi@<raspberry-pi-ip>
 sudo apt update && sudo apt upgrade -y
+```
 
-# Install Docker
+# 6.Install Docker, Add user to Docker group, and reboot
+```bash
 curl -sSL https://get.docker.com | sh
-
-# Add user to Docker group (replace 'pi' with your username)
 sudo usermod -aG docker pi
-
-# Reboot Raspberry Pi
 sudo reboot
+```
 
-### Check for Open Ports (For Pi-hole):
-# Check if ports 53, 67, 80, and 443 are in use
+# 13. Check for Open Ports (For Pi-hole):
+```bash
 sudo lsof -i :53
 sudo lsof -i :67
 sudo lsof -i :80
 sudo lsof -i :443
+```
 
-### Install Home Assistant and Pi-hole:
-# Install Home Assistant
+# 14. Install Home Assistant
+```bash
 docker run -d --name="home-assistant" \
   -v /home/pi/homeassistant:/config \
   -e TZ=America/Chicago \
   --net=host \
   homeassistant/home-assistant:stable
+```
 
-# Install Pi-hole
+# 15. Install Pi-hole
+```bash
 docker run -d \
   --name="pihole" \
   -p 53:53/tcp -p 53:53/udp \
@@ -72,11 +65,10 @@ docker run -d \
   -e WEBPASSWORD=YourPasswordHere \
   --cap-add=NET_ADMIN \
   pihole/pihole:latest
+```
 
-### Enabling Remote Desktop (RDP):
-# Install and enable xrdp on Raspberry Pi
+# 15. Install and enable xrdp on Raspberry Pi
+```bash
 sudo apt install xrdp
 sudo systemctl enable xrdp && sudo systemctl start xrdp
-
-### Connect via Remote Desktop:
-# Use Windows Remote Desktop Connection to connect to Pi's IP address
+```
