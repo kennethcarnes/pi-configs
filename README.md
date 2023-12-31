@@ -1,13 +1,14 @@
-# 1. Set up directory structure
+# Installation
+## 1. Set up directory structure
 ```bash
 mkdir -p ~/pi-configs/{home-assistant,docker,pi-hole}
 cd C:\code\pi-configs
 mkdir .github\workflows -Force
 ```
 
-# 2. Write the YAML content to a .gitub\workflows\ci-cd.yml file
+## 2. Write the YAML content to a .gitub\workflows\ci-cd.yml file
 
-# 3. Proceed with repository creation
+## 3. Proceed with repository creation
 ```bash
 git add .
 git commit -m "first commit"
@@ -16,40 +17,38 @@ git remote add origin https://github.com/kennethcarnes/pi-configs.git
 git push -u origin main
 ```
 
-# 6. Connect to Raspberry Pi via SSH & update
+## 4. Config SSH
 ```bash
 sudo raspi-config
 # Follow: "Interfacing Options" -> "SSH" -> Enable
-hostname -I
-ssh pi@<raspberry-pi-ip>
-sudo apt update && sudo apt upgrade -y
 ```
 
-# 6.Install Docker, Add user to Docker group, and reboot
+## 5. Install Docker, Add user to Docker group, and reboot
 ```bash
+sudo apt update && sudo apt upgrade -y
 curl -sSL https://get.docker.com | sh
 sudo usermod -aG docker pi
 sudo reboot
 ```
 
-# 13. Check for Open Ports (For Pi-hole):
+## 7. Install Home Assistant
 ```bash
+docker run -d --name="home-assistant" 
+  -v /home/pi/homeassistant:/config \
+  -e TZ=America/Chicago \
+  --net=host \
+  --restart=unless-stopped \
+  homeassistant/home-assistant:stable\
+```
+
+## 8. Install Pi-hole
+```bash
+#Verify open ports
 sudo lsof -i :53
 sudo lsof -i :67
 sudo lsof -i :80
 sudo lsof -i :443
 ```
-
-# 14. Install Home Assistant
-```bash
-docker run -d --name="home-assistant" \
-  -v /home/pi/homeassistant:/config \
-  -e TZ=America/Chicago \
-  --net=host \
-  homeassistant/home-assistant:stable
-```
-
-# 15. Install Pi-hole
 ```bash
 docker run -d \
   --name="pihole" \
@@ -67,8 +66,9 @@ docker run -d \
   pihole/pihole:latest
 ```
 
-# 15. Install and enable xrdp on Raspberry Pi
-```bash
-sudo apt install xrdp
-sudo systemctl enable xrdp && sudo systemctl start xrdp
-```
+## Verification
+- ```hostname -I``` should return the ip address of the Raspberry Pi
+- SSH: ```ssh pi@192.168.1.41```
+- Pi-hole: ```http://192.168.1.41/admin```
+- Home Assistant: ````http://192.168.1.41:8123````
+- VNC: ```192.168.1.41```
