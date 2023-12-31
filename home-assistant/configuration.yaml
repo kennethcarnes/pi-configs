@@ -1,0 +1,43 @@
+# Basic configuration.yaml example
+
+homeassistant:
+  name: Home
+  latitude: 32.87336
+  longitude: 117.22743
+  unit_system: metric
+  time_zone: UTC
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+# Enable Lovelace UI
+lovelace:
+  mode: yaml
+
+# Include entities: This is where you can start adding your entities
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml

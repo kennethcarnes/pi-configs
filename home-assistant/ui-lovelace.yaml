@@ -1,0 +1,90 @@
+title: Home
+views:
+  - title: Main View
+    path: main_view
+    cards:
+      - type: entities
+        title: Hue Lights
+        show_header_toggle: false
+        entities:
+          - entity: light.hue_color_lamp_1
+          - entity: light.hue_color_lamp_2
+          - entity: light.hue_color_lamp_3
+          - entity: light.hue_play_1
+          - entity: light.hue_play_2
+          - entity: light.kitty_cave
+
+      - type: entities
+        title: Roomba Controls
+        show_header_toggle: false
+        entities:
+          - entity: vacuum.roomba
+          - type: call-service
+            name: Start Cleaning
+            icon: 'mdi:play'
+            action_name: 'Start'
+            service: vacuum.start
+            service_data:
+              entity_id: vacuum.roomba
+          - type: call-service
+            name: Stop Cleaning
+            icon: 'mdi:stop'
+            action_name: 'Stop'
+            service: vacuum.stop
+            service_data:
+              entity_id: vacuum.roomba
+
+      - type: entities
+        title: Scenes
+        show_header_toggle: false
+        entities:
+          - entity: scene.kitty_cave_bright
+          - entity: scene.kitty_cave_crocus
+          - entity: scene.kitty_cave_crystalline
+          - entity: scene.kitty_cave_energize
+          - entity: scene.kitty_cave_nightlight
+          - entity: scene.kitty_cave_spring_blossom
+          - entity: scene.kitty_cave_under_the_tree
+          - entity: scene.kitty_cave_winter_mountain
+
+      - type: entities
+        title: Dream Machine Info
+        show_header_toggle: false
+        entities:
+          - entity: sensor.kc_dreammachine_cpu_temperature
+          - entity: sensor.kc_dreammachine_cpu_utilization
+          - entity: sensor.kc_dreammachine_memory_utilization
+          - entity: sensor.kc_dreammachine_storage_utilization
+          - entity: sensor.kc_dreammachine_uptime
+          - entity: sensor.kc_dreammachine_recording_capacity
+          - entity: switch.kc_dreammachine_analytics_enabled
+          - entity: switch.kc_dreammachine_insights_enabled
+
+      - type: entities
+        title: UniFi Protect
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.kc_cam_motion
+          - entity: binary_sensor.kc_cam_person_detected
+          - entity: binary_sensor.kc_cam_vehicle_detected
+          - entity: binary_sensor.kc_cam_audio_object_detected
+          - entity: binary_sensor.kc_cam_co_alarm_detected
+          - entity: binary_sensor.kc_cam_smoke_alarm_detected
+          - entity: sensor.kc_cam_last_motion_detected
+          - entity: sensor.kc_cam_disk_write_rate
+          - entity: sensor.kc_cam_storage_used
+          - entity: sensor.kc_cam_received_data
+          - entity: sensor.kc_cam_transferred_data
+          - entity: sensor.kc_cam_uptime
+          - entity: switch.kc_cam_system_sounds
+          - entity: switch.kc_cam_status_light_on
+          - entity: switch.kc_cam_privacy_mode
+          - entity: switch.kc_cam_overlay_show_date
+          - entity: switch.kc_cam_overlay_show_logo
+          - entity: switch.kc_cam_overlay_show_name
+          - entity: switch.kc_cam_overlay_show_nerd_mode
+          - entity: switch.kc_cam_detections_motion
+          - entity: switch.kc_cam_detections_person
+          - entity: switch.kc_cam_detections_smoke_co
+          - entity: switch.kc_cam_detections_vehicle
+          - entity: switch.kc_cam_hdr_mode
